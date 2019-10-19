@@ -54,6 +54,10 @@ sub3=trunc(rnorm(5,70,3))
 gender=sample(c('m','f'),size=5,replace=TRUE)
 (students=data.frame(rollno,gender,sub1,sub2,sub3))
 
-longdata=melt(students,id.vars=c('rollno','gender'))
+longdata=melt(students,id.vars=c('rollno','gender'),variable.name = 'subject',value.name = 'marks')
 longdata
 head(longdata)
+library(dplyr)
+longdata %>% group_by(gender) %>% summarise(mean(marks))
+widedata =  dcast(longdata,rollno + gender~subject)
+widedata
